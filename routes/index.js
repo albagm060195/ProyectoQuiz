@@ -5,6 +5,7 @@ var router = express.Router();
 
 var quizController = require('../controllers/quiz_controller');
 
+
 router.get('/', function(req, res, next) {
   res.render('index',{title:'Quiz' });
 });
@@ -13,9 +14,9 @@ router.get('/author',function(req,res){
 res.render('author',{title:'AUTORES' });
 });
 
-
-router.get('/question',require('../controllers/quiz_controller').question);
-router.get('/check', quizController.check);
+router.get('/quizzes',quizController.index);
+router.get('/quizzes/:quizId(\\d+)',quizController.show);
+router.get('/quizzes/:quizId(\\d+)/check',quizController.check);
 
 
 module.exports = router;
