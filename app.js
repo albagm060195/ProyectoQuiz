@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var partials = require('express-partials');
 var routes = require('./routes/index');
+var session = require('express-session');
+var flash = require('express-flash');
 
 
 var app = express();
@@ -23,9 +25,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(session({secret:"Quiz 2016",resave: false, saveUninitialized: true}));
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(partials());
-
+app.use(flash());
 app.use('/', routes);
 
 
