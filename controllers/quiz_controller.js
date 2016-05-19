@@ -42,7 +42,26 @@ res.render('quizzes/show.ejs',{quiz: req.quiz, answer:answer});
 }).catch(function(error){ next(error);});
 };
 
- 
+// GET /quizzes/new
+exports.new = function(req,res,next){
+var quiz = models.Quiz.build({question: "", answer: ""});
+res.render('quizzes/new',{quiz: quiz});
+};
+
+
+// POST /quizzes/create
+exports.create = function(req,res,next){
+var quiz = models.Quiz.build({ question: req.body.quiz.question,
+answer: req.body.quiz.answer});
+
+//guarda en DB los campos pregunta y respuesta de quiz
+
+quiz.save({fields: ["question","answer"]}).then(function(quiz){
+res.redirect('/quizzes');
+}).catch(function(error) {
+next(error); });
+};
+
 
 //GET / quizzes/:id/check
 exports.check = function(req, res){
