@@ -1,5 +1,6 @@
 var models = require('../models');
 var Sequelize = require('sequelize');
+var url = require("url");
 
 // Autoload el quiz asociado a :quizId
 exports.load = function(req, res, next, quizId) {
@@ -24,6 +25,14 @@ res.render('quizzes/index.ejs',{quizzes: quizzes});
 }).catch(function(error){next(error);
 });
 }
+else if(req.url=='/quizzes.json'){
+models.Quiz.findAll().then(function(quizzes){
+res.json({quizzes:quizzes});
+}).catch(function(error){
+next(error);}
+);}
+
+
 else{
 models.Quiz.findAll().then(function(quizzes){
 res.render('quizzes/index.ejs',{quizzes: quizzes});
