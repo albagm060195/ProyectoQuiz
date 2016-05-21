@@ -33,7 +33,6 @@ res.json({quizzes:quizzes});
 next(error);}
 );}
 
-
 else{
 models.Quiz.findAll().then(function(quizzes){
 res.render('quizzes/index.ejs',{quizzes: quizzes});
@@ -43,12 +42,17 @@ res.render('quizzes/index.ejs',{quizzes: quizzes});
 };
 
 
+
+
 //Get /quizzes/:id
 exports.show = function(req, res, next){
 models.Quiz.findById(req.params.quizId).then(function(quiz){
 if(quiz){
 var answer = req.query.answer || '';
-res.render('quizzes/show.ejs',{quiz: req.quiz, answer:answer});
+if(req.url=='/quizzes/'+req.params.quizId+'.json'){
+res.json('quizzes/show.ejs',{quiz: req.quiz, answer:answer}); // esto nuevo tambien
+}else{
+res.render('quizzes/show.ejs',{quiz: req.quiz, answer:answer});} //este else es nuevo
 } else { throw new Error('No existe ese quiz en la BBDD.');}
 }).catch(function(error){ next(error);});
 };
