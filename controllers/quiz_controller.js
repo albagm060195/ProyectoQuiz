@@ -83,6 +83,18 @@ var quiz = req.quiz; //req.quiz:autoload
 res.render('quizzes/edit.ejs', {quiz:quiz});//Redireccion HTTP a lista de preguntas
 };
 
+//DELETE / quizzes/:id
+exports.destroy = function(req, res, next) {
+  req.quiz.destroy()
+    .then( function() {
+	  req.flash('success', 'Quiz borrado con éxito.');
+      res.redirect('/quizzes');
+    })
+    .catch(function(error){
+	  req.flash('error', 'Error al editar el Quiz: '+error.message);
+     next(error);
+   });
+};
 
 
 // PUT /quizzes/:quizId
