@@ -1,6 +1,6 @@
 var models = require('../models');
 var Sequelize = require('sequelize');
-var url = require("url");
+var url = require('url');
 
 // Autoload el quiz asociado a :quizId
 exports.load = function(req, res, next, quizId) {
@@ -25,6 +25,7 @@ res.render('quizzes/index.ejs',{quizzes: quizzes});
 }).catch(function(error){next(error);
 });
 }
+
 else if(req.url=='/quizzes.json'){
 models.Quiz.findAll().then(function(quizzes){
 res.json({quizzes:quizzes});
@@ -100,7 +101,7 @@ exports.destroy = function(req, res, next) {
       res.redirect('/quizzes');
     })
     .catch(function(error){
-	  req.flash('error', 'Error al editar el Quiz: '+error.message);
+	  req.flash('error', 'Error al editar el Quiz:'+error.message);
      next(error);
    });
 };
