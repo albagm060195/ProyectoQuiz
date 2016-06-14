@@ -27,7 +27,7 @@ router.post('/quizzes',quizController.create);
 router.get('/quizzes/:quizId(\\d+)/edit',quizController.edit);
 router.put('/quizzes/:quizId(\\d+)',quizController.update);
 router.delete('/quizzes/:quizId(\\d+)',quizController.destroy);
-router.get('/quizzes/:quizId\\d+)/commets/new', commentController.new);
+router.get('/quizzes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizzes/:quizId(\\d+)/comments',commentController.create);
 
 
