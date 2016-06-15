@@ -8,6 +8,7 @@ module.exports = {
                           primaryKey: true,         autoIncrement: true,  
                           unique: true },
              QuizId:    { type: Sequelize.INTEGER },
+             AuthorId:  {type : Sequelize.INTERGER},
              text:      { type: Sequelize.STRING,   unique: true,
                           validate: { notEmpty: {msg: "Falta Comentario"} } },
              createdAt: { type: Sequelize.DATE,     allowNull: false },
