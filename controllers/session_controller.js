@@ -2,6 +2,13 @@ var models = require('../models');
 var Sequelize = require('sequelize');
 var url = require('url');
 
+exports.loginRequired = function (req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        res.redirect('/session?redir=' + (req.param('redir') || req.url));
+    }
+};
 
 
 
@@ -55,7 +62,7 @@ exports.create = function(req, res, next) {
     	        // Crear req.session.user y guardar campos id y username
     	        // La sesión se define por la existencia de: req.session.user
 		 req.session.user = {id:user.id, username:user.username, isAdmin:user.isAdmin};
-		var time= new Date().getTime();
+		var time= new Date();
     	        req.session.user = {id:user.id, username:user.username, time:time};
 
                 res.redirect(redir); // redirección a redir
