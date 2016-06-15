@@ -31,12 +31,28 @@ app.use(methodOverride('_method', {methods: ["POST", "GET"]}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(partials());
 app.use(flash());
+//helper dinamico :
 app.use(function(req,res,next){
 //Hacer visible req.session en las vistas
 res.locals.session = req.session;
 next();
 });
 
+
+app.use(function(req, res,next){
+var user = req.session.user;
+var actual_time =new Date();
+if(!user){
+next();
+}else if(actual_time.getTime() - user.time > 120000){
+
+delete req.session.user;
+next();
+}else{
+user.time = new Date().getTime();
+next();
+}
+});
 
 app.use('/', routes);
 
